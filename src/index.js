@@ -6,6 +6,12 @@ const { readFile, writeFile } = require('fs');
 const PRETTY_INDENTATION = 4;
 const DEFAULT_ENCODING = 'utf8';
 
+const exitCodes = {
+    success: 0,
+    interpretationErrors: 1,
+    fatalError: 2
+};
+
 if (require.main == module) {
     const argv = getCommandLineArguments();
     
@@ -21,14 +27,14 @@ function downsonCli(argv) {
         silent: argv.silent
     };
 
+    process.exitCode = 0;
+
     inputPromise
         .then(data => downson(data, downsonOptions))
         .then(formatFailures)
         .then(result => {
             if (result.hasInterpretationErrors) {
-                console.error(result.failures);
-
-                process.exit(1);
+                process.exitCode = exitCodes.interpretationErrors;
             }
 
             return result;
@@ -40,7 +46,7 @@ function downsonCli(argv) {
 
             console.error(err);
 
-            process.exit(1);
+            process.exitCode = exitCodes.fatalError;
         });
 }
 
