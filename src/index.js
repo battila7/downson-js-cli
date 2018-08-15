@@ -13,7 +13,7 @@ const exitCodes = {
 };
 
 if (require.main == module) {
-    const argv = getCommandLineArguments();
+    const argv = require('./argv')();
     
     downsonCli(argv);
 } else {
@@ -48,32 +48,6 @@ function downsonCli(argv) {
 
             process.exitCode = exitCodes.fatalError;
         });
-}
-
-function getCommandLineArguments() {
-    return require('yargs')
-        .option('i', {
-            alias: 'input',
-            describe: 'The input file to read from. If omitted, then stdin is used.',
-            type: 'string'
-        })
-        .option('o', {
-            alias: 'output',
-            describe: 'The output file to write to. If omitted, then stdout is used.',
-            type: 'string'
-        })
-        .option('p', {
-            alias: 'pretty',
-            describe: 'Pretty-print the result.',
-            type: 'boolean'
-        })
-        .option('s', {
-            alias: 'silent',
-            describe: 'Enable the silent option for downson.',
-            type: 'boolean'
-        })
-        .help()
-        .argv;
 }
 
 function readFromFile(path) {
