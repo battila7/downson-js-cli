@@ -36,17 +36,17 @@ Options:
 
 ### Exit Codes and Ouput
 
-If the process was successful and there are **no** interpretation errors (or a fatal error occurred, but the `--silent` options was passed), then 
+If the process was successful or the `--silent` option was set, then 
   * the exit code is set to `0`,
   * the *data layer* of the downson document is written to either the `stdout` or the specified output file,
   * the list of the failures is written to `stderr`.
 
-If the process was successful but the downslon library hit an interpretation error, then
+If the process was successful but the downson library hit an interpretation error (and the `--silent` option is unset), then
   * the exit code is set to `1`,
   * the presumably corrupted *data layer* of the downson document is written to either the `stdout` or the specified output file,
   * the list of the failures is written to `stderr`.
 
-If downson-cli encounters a fatal error, then
+If downson-cli encounters a fatal error (and the `--silent` option is unset), then
   * the exit code is set to `2`,
   * the error is written to `stderr`,
   * nothing is written to `stdout`.
