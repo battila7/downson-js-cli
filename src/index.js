@@ -33,7 +33,7 @@ function downsonCli(argv) {
         .then(data => downson(data, downsonOptions))
         .then(formatFailures)
         .then(result => {
-            if (result.hasInterpretationErrors) {
+            if (result.hasInterpretationErrors && !argv.silent) {
                 process.exitCode = exitCodes.interpretationErrors;
             }
 

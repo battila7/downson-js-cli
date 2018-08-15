@@ -17,7 +17,7 @@ function getArgv() {
         })
         .option('s', {
             alias: 'silent',
-            describe: 'Enable the silent option for downson.',
+            describe: 'Ignore interpretation errors and fatal errors.',
             type: 'boolean'
         })
         .help()
