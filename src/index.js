@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const path = require('path');
+
 const downson = require('downson');
 const { readFile, writeFile } = require('fs');
 
@@ -28,6 +30,21 @@ function downsonCli(argv) {
     };
 
     process.exitCode = 0;
+
+    const types = (function () {
+        if (!argv.type) {
+            return [];
+        } else if (!Array.isArray(argv.type)) {
+            return [argv.type]
+        } else {
+            return argv.type;
+        }
+    })();
+
+    types
+        .map(t => path.resolve(process.cwd(), t))
+        .map(require)
+        .forEach(func => func(downson.registerType.bind(downson)));
 
     inputPromise
         .then(data => downson(data, downsonOptions))

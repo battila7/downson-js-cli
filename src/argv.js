@@ -20,6 +20,11 @@ function getArgv() {
             describe: 'Ignore interpretation errors and fatal errors.',
             type: 'boolean'
         })
+        .options('t', {
+            alias: 'type',
+            describe: 'Path to a module that can register custom types. Can be specified multiple types.',
+            type: 'string'
+        })
         .help()
         .argv;
 }
